@@ -1,7 +1,8 @@
-namespace my.bookshop;
+namespace my.student;
 
-entity Books {
-  key ID : Integer;
-  title  : String;
-  stock  : Integer;
+entity Student {
+  key email  : String(65);
+  first_name : String(20);
+  last_name  : String(20);
+  date_sign_up : Date;
 }

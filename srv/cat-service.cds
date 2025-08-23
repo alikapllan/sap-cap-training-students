@@ -1,9 +1,7 @@
-// using my.bookshop as my from '../db/schema';
+using my.student as schema from '../db/schema';
 
-// service CatalogService {
-//     @readonly entity Books as projection on my.Books;
-// }
+service CatalogService {
+    @readonly entity Student as projection on schema.Student; // referring to the entity in schema.cds
 
-service myService {
     function myFunctionName(msg:String) returns String;
 }
