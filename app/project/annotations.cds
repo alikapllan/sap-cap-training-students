@@ -1,6 +1,25 @@
 using CatalogService as service from '../../srv/cat-service';
 annotate service.Student with @(
-    UI.FieldGroup #GeneratedGroup : {
+    UI : { 
+    SelectionFields: [email],
+
+    LineItem : [
+      { Label:'Email', Value: email},
+      { Label:'First Name', Value: first_name},
+      { Label:'Last Name', Value: last_name},
+      { Label:'Date of Sign Up', Value: date_sign_up} 
+    ],
+
+    // for object page
+    HeaderInfo  : {
+        $Type : 'UI.HeaderInfoType',
+        TypeName : 'Student',
+        TypeNamePlural : 'Students',
+        Title: { Value : first_name },
+        Description: { Label : 'Email', Value: email },
+    },
+
+    FieldGroup #GeneratedGroup : {
         $Type : 'UI.FieldGroupType',
         Data : [
             {
@@ -25,7 +44,8 @@ annotate service.Student with @(
             },
         ],
     },
-    UI.Facets : [
+    
+    Facets : [
         {
             $Type : 'UI.ReferenceFacet',
             ID : 'GeneratedFacet1',
@@ -33,5 +53,8 @@ annotate service.Student with @(
             Target : '@UI.FieldGroup#GeneratedGroup',
         },
     ],
+   }
+
+    
 );
 
