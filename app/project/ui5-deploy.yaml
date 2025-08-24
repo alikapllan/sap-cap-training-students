@@ -17,6 +17,6 @@ builder:
       afterTask: generateCachebusterInfo
       configuration:
         archiveName: captrainingstudentsproject
-        relativePaths: true
+        relativePaths: false
         additionalFiles:
           - xs-app.json

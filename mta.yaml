@@ -21,7 +21,7 @@ modules:
     build-parameters:
       builder: npm-ci
   - name: sap-cap-training-students-db-deployer
-    type: hdb
+    type: nodejs
     path: gen/db
     requires:
       - name: sap-cap-training-students-db
