@@ -1,7 +1,7 @@
 using CatalogService as service from '../../srv/cat-service';
 annotate service.Student with @(
     UI : { 
-    SelectionFields: [email],
+    SelectionFields: [email, first_name],
 
     LineItem : [
       { Label:'Email', Value: email},
