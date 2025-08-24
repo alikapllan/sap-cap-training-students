@@ -32,7 +32,8 @@
   "cds": {
     "requires": {
       "[production]": {
-        "auth": "xsuaa"
+        "auth": "xsuaa",
+        "db": "hana"
       },
       "connectivity": true,
       "destinations": true,
