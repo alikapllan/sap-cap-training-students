@@ -35,4 +35,17 @@ module.exports = cds.service.impl(async function () {
     console.log(result);
     return result;
   });
+
+  this.after("READ", Student, (data) => {
+    // changing values possible
+    return data.map((d) => {
+      d.first_name = d.first_name + " " + d.last_name;
+      return d;
+    });
+
+    // doesnt work. As filtering etc. not possible in .after event
+    // let finalValue = data.filter((d) => d.first_name === "Alice");
+    // console.log(finalValue);
+    // return finalValue;
+  });
 });
