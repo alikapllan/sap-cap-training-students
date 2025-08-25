@@ -12,7 +12,7 @@ module.exports = (srv) => {
 
 // Another way of writing
 module.exports = cds.service.impl(async function () {
-  const { Student } = this.entities;
+  const { Student, UpdateStudent } = this.entities;
 
   this.on("READ", Student, async (req) => {
     // const result = await SELECT.from(Student); --> also same result
@@ -47,5 +47,22 @@ module.exports = cds.service.impl(async function () {
     // let finalValue = data.filter((d) => d.first_name === "Alice");
     // console.log(finalValue);
     // return finalValue;
+  });
+
+  this.on("UPDATE", UpdateStudent, async (req, res) => {
+    let firstName = req.data.first_name;
+    const studentEmail = req.data.email;
+
+    let result = await UPDATE(Student)
+      .set({ first_name: firstName })
+      .where({ email: studentEmail });
+
+    console.log(
+      result === 0
+        ? "No student found for update"
+        : `Update successful, ${result} row(s) affected`
+    );
+
+    return req.data;
   });
 });

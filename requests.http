@@ -1,0 +1,18 @@
+### Get all Students
+GET http://localhost:4004/odata/v4/catalog/Student
+Accept: application/json
+
+###
+
+### Get a Student by key
+GET http://localhost:4004/odata/v4/catalog/Student(email='alice.wonderland@example.com')
+Accept: application/json
+
+
+### Update a Student (via UpdateStudent)
+PATCH http://localhost:4004/odata/v4/catalog/UpdateStudent(email='alice.wonderland@example.com')
+Content-Type: application/json
+
+{
+  "first_name": "UpdatedName"
+}
