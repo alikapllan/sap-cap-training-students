@@ -31,9 +31,15 @@
   },
   "cds": {
     "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      },
       "[production]": {
         "auth": "xsuaa",
-        "db": "sqlite"
+        "db": "hana"
       },
       "connectivity": true,
       "destinations": true,
