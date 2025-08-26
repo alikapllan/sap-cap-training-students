@@ -108,4 +108,19 @@ module.exports = cds.service.impl(async function () {
       return req.error(500, "Error while inserting student");
     }
   });
+
+  this.on("insertManyStudents", async (req) => {
+    const { Student } = this.entities;
+    const payload = req.data.students;
+
+    try {
+      const result = await cds.tx(req).run(INSERT.into(Student).entries(payload));
+      
+      console.log(`Inserted ${result.length} student(s)`);
+      return payload;
+    } catch (err) {
+      console.error(err);
+      req.error(500, "Error while inserting multiple students");
+    }
+  });
 });

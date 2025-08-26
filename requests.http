@@ -29,3 +29,24 @@ Content-Type: application/json
   "last_name": "Student",
   "date_sign_up": "2025-08-26"
 }
+
+### Insert multiple Students
+POST http://localhost:4004/odata/v4/catalog/insertManyStudents
+Content-Type: application/json
+
+{
+  "students": [
+    {
+      "email": "multi.one@example.com",
+      "first_name": "Multi",
+      "last_name": "One",
+      "date_sign_up": "2025-08-26"
+    },
+    {
+      "email": "multi.two@example.com",
+      "first_name": "Multi",
+      "last_name": "Two",
+      "date_sign_up": "2025-08-26"
+    }
+  ]
+}
