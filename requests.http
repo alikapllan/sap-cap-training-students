@@ -50,3 +50,9 @@ Content-Type: application/json
     }
   ]
 }
+
+###
+
+### DELETE a Student
+### DELETE a Student
+DELETE http://localhost:4004/odata/v4/catalog/DeleteStudent(email='new.student@example.com')

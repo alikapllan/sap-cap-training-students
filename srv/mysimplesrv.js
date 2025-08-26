@@ -12,7 +12,8 @@ module.exports = (srv) => {
 
 // Another way of writing
 module.exports = cds.service.impl(async function () {
-  const { Student, UpdateStudent, InsertStudent } = this.entities;
+  const { Student, UpdateStudent, InsertStudent, DeleteStudent } =
+    this.entities;
 
   this.on("READ", Student, async (req) => {
     // const result = await SELECT.from(Student); --> also same result
@@ -114,13 +115,34 @@ module.exports = cds.service.impl(async function () {
     const payload = req.data.students;
 
     try {
-      const result = await cds.tx(req).run(INSERT.into(Student).entries(payload));
-      
+      const result = await cds
+        .tx(req)
+        .run(INSERT.into(Student).entries(payload));
+
       console.log(`Inserted ${result.length} student(s)`);
       return payload;
     } catch (err) {
       console.error(err);
       req.error(500, "Error while inserting multiple students");
+    }
+  });
+
+  this.on("DELETE", DeleteStudent, async (req) => {
+    try {
+      const StudentEmailToDelete = req.data.email; // comes from the URL key
+      const result = await cds
+        .tx(req)
+        .run(DELETE.from(Student).where({ email: StudentEmailToDelete }));
+
+      if (result === 0) {
+        return req.error(404, `No student found with email ${email}`);
+      }
+
+      console.log(`Deleted student with email ${StudentEmailToDelete}`);
+      return { deleted: result };
+    } catch (err) {
+      console.error(err);
+      req.error(500, "Error deleting student");
     }
   });
 });
