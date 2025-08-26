@@ -53,16 +53,37 @@ module.exports = cds.service.impl(async function () {
     let firstName = req.data.first_name;
     const studentEmail = req.data.email;
 
-    let result = await UPDATE(Student)
-      .set({ first_name: firstName })
-      .where({ email: studentEmail });
+    // let result = await UPDATE(Student)
+    //   .set({ first_name: firstName })
+    //   .where({ email: studentEmail });
 
-    console.log(
-      result === 0
-        ? "No student found for update"
-        : `Update successful, ${result} row(s) affected`
-    );
+    // console.log(
+    //   result === 0
+    //     ? "No student found for update"
+    //     : `Update successful, ${result} row(s) affected`
+    // );
 
-    return req.data;
+    try {
+      // run the UPDATE inside the request transaction
+      const result = await cds
+        .tx(req) // tx handles commit or rollback inside on its own thats why better over cds.transaction().run
+        .run(
+          UPDATE(Student)
+            .set({ first_name: firstName })
+            .where({ email: studentEmail }),
+        );
+
+      if (result >= 1) {
+        console.log(`Update successful: ${result} row(s) affected`);
+        return req.data;
+      } else {
+        return req.error(404, "No student found for update");
+      }
+    } catch (err) {
+      console.error(err);
+      return req.error(500, "Error in updating record");
+    }
+
+    // return req.data;
   });
 });
