@@ -12,7 +12,7 @@ module.exports = (srv) => {
 
 // Another way of writing
 module.exports = cds.service.impl(async function () {
-  const { Student, UpdateStudent } = this.entities;
+  const { Student, UpdateStudent, InsertStudent } = this.entities;
 
   this.on("READ", Student, async (req) => {
     // const result = await SELECT.from(Student); --> also same result
@@ -70,7 +70,7 @@ module.exports = cds.service.impl(async function () {
         .run(
           UPDATE(Student)
             .set({ first_name: firstName })
-            .where({ email: studentEmail }),
+            .where({ email: studentEmail })
         );
 
       if (result >= 1) {
@@ -85,5 +85,27 @@ module.exports = cds.service.impl(async function () {
     }
 
     // return req.data;
+  });
+
+  this.on("CREATE", InsertStudent, async (req) => {
+    const { Student } = this.entities;
+
+    // normalize: if req.data is an object → wrap into array -> to showcase that .run takes also Array
+    const payload = Array.isArray(req.data) ? req.data : [req.data];
+
+    try {
+      // one INSERT call for all entries
+      const result = await cds
+        .tx(req)
+        .run(INSERT.into(Student).entries(payload));
+
+      console.log(
+        `Inserted student ${payload[0].first_name} ${payload[0].last_name}`
+      );
+      return payload; // return the inserted records
+    } catch (err) {
+      console.error(err);
+      return req.error(500, "Error while inserting student");
+    }
   });
 });
