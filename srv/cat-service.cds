@@ -8,12 +8,3 @@ service CatalogService @(impl: './mysimplesrv') {
     // multion students insertion
     action insertManyStudents (students : array of Student) returns array of Student;
 }
-
-extend service CatalogService with {
-    @readonly entity CustomGetStudent as select from schema.Student{
-        *, // all data
-        first_name ||' '|| last_name as full_name: String
-    }excluding {
-        date_sign_up
-    };
-}
