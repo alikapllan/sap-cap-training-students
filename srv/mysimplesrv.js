@@ -12,6 +12,11 @@ module.exports = (srv) => {
 
 // Another way of writing
 module.exports = cds.service.impl(async function () {
+  // mount extra handlers ONCE at startup - Think of it like a plugin you attach yourself
+  require("./mynewsrv").call(this); // as syntax @(impl: './mynewsrv') wasnt possible in nynewsrv.cds
+
+  require("./myothersrv").call(this); // adding multiple handlers possible
+
   const { Student, UpdateStudent, InsertStudent, DeleteStudent } =
     this.entities;
 

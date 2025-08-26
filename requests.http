@@ -59,3 +59,14 @@ DELETE http://localhost:4004/odata/v4/catalog/DeleteStudent(email='new.student@e
 ### Get CustomStudent
 GET http://localhost:4004/odata/v4/catalog/CustomGetStudent
 Accept: application/json
+
+### Insert a single Student with an illegal email - to trigger before event in the extension mynewsrv.js
+POST http://localhost:4004/odata/v4/catalog/InsertStudent
+Content-Type: application/json
+
+{
+  "email": "new.student@gmail.com",
+  "first_name": "New",
+  "last_name": "Student",
+  "date_sign_up": "2025-08-26"
+}
