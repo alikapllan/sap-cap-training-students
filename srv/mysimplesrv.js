@@ -11,7 +11,7 @@ module.exports = (srv) => {
 };
 
 // Another way of writing
-module.exports = cds.service.impl(async function () {
+module.exports["CatalogService"] = cds.service.impl(async function () {
   // mount extra handlers ONCE at startup - Think of it like a plugin you attach yourself
   require("./mynewsrv").call(this); // as syntax @(impl: './mynewsrv') wasnt possible in nynewsrv.cds
 
@@ -149,5 +149,25 @@ module.exports = cds.service.impl(async function () {
       console.error(err);
       req.error(500, "Error deleting student");
     }
+  });
+});
+
+module.exports["CatalogServiceLMS"] = cds.service.impl(async function () {
+  const { GetContent, GetCourse, GetEnrollment, GetStudent } = this.entities;
+
+  this.on("READ", GetContent, async (req, res) => {
+    console.log("We are inside GetContent of LMS!");
+  });
+
+  this.on("READ", GetCourse, async (req, res) => {
+    console.log("We are inside GetCourse of LMS!");
+  });
+
+  this.on("READ", GetEnrollment, async (req, res) => {
+    console.log("We are inside GetEnrollment of LMS!");
+  });
+
+  this.on("READ", GetStudent, async (req, res) => {
+    console.log("We are inside GetStudent of LMS!");
   });
 });
