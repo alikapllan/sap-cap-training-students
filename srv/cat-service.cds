@@ -5,6 +5,6 @@ service CatalogService @(impl: './mysimplesrv') {
     @updateonly entity UpdateStudent as projection on schema.Student;
     @insertonly entity InsertStudent as projection on schema.Student;
     @deleteonly entity DeleteStudent as projection on schema.Student;
-    // multion students insertion
+    // multiple students insertion
     action insertManyStudents (students : array of Student) returns array of Student;
 }
