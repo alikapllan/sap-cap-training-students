@@ -173,6 +173,28 @@ module.exports["CatalogServiceLMS"] = cds.service.impl(async function () {
   });
 
   this.on("READ", GetStudent, async (req) => {
+    /* manual testing of Navigation functionality of services to understand how it works
+
+     - this below displays all enrollments of the student having email 'demo@demo.com'
+     http://localhost:4004/odata/v4/catalog-service-lms/GetStudent('demo@demo.com')/enrollment
+
+     - this below follows the navigation from a specific enrollment (ID = 3001) of that student
+       to its related course. In this example, enrollment 3001 points to the UI5 Course entity,
+       so the call expands from Student (having email 'demo@demo.com') → Enrollment (his enrollment of 3001) → Course (course id displayed in enrollment 3001)
+
+       # how Course.csv now looks like 
+       ID,course_ID,student_email
+       3001,1,demo@demo.com
+       3002,2,demo@demo.com
+       3003,2,ajay@demo.com
+     http://localhost:4004/odata/v4/catalog-service-lms/GetStudent('demo@demo.com')/enrollment(3001)/course
+
+     - this below displays all content of UI5 Course (contents with id 2001 and 2005)
+     http://localhost:4004/odata/v4/catalog-service-lms/GetStudent('demo@demo.com')/enrollment(3001)/course/content
+
+     NAVIGATION ALSO possible like this:
+     http://localhost:4004/odata/v4/catalog-service-lms/GetStudent/demo@demo.com/enrollment/3001/course/content
+    */
     console.log("We are inside GetStudent of LMS!");
     return await run(req);
   });
