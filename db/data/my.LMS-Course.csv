@@ -1,0 +1,5 @@
+ID,course_name,course_url,course_duration,course_price,published_status
+1,Learn UI5,https://www.sapdevelopment.com/UI5,10,192.80,true
+2,Learn CAP,https://www.sapdevelopment.com/CAP,10,292.80,true
+3,Learn RAP,https://www.sapdevelopment.com/RAP,10,192.80,true
+4,Learn CDS,https://www.sapdevelopment.com/CDS,10,392.80,true

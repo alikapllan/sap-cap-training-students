@@ -1,8 +1,7 @@
-namespace my.student;
-
+namespace my.LMS;
 entity Content {
     key ID: Integer;
-    url: String(2048);
+    url: String(1024);
     date_published: Date;
     content_type: String(20);
     course: Association to Course; // N part  of a relationship of 1 to N
@@ -11,7 +10,8 @@ entity Content {
 entity Course {
     key ID: Integer;
     course_name: String(100);
-    course_duration: DecimalFloat;
+    course_url: String(1024);
+    course_duration: Integer;
     course_price: Decimal(5, 2);
     published_status: Boolean;
     content: Association to many Content on content.course = $self; // 1 part of a relationship of 1 to N
