@@ -10,7 +10,7 @@ service CatalogService @(impl: './mysimplesrv') {
     action insertManyStudents (students : array of Student) returns array of Student;
 }
 
-service CatalogServiceLMS {
+service CatalogServiceLMS @(impl: './mysimplesrv') {
     @readonly entity GetContent    as projection on LMS.Content;
     @readonly entity GetCourse     as projection on LMS.Course;
     @readonly entity GetEnrollment as projection on LMS.Enrollment;

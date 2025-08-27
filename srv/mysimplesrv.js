@@ -1,14 +1,14 @@
 const cds = require("@sap/cds");
 
-module.exports = (srv) => {
-  const { Student } = srv.entities; // use exposed entity
+// module.exports = (srv) => {
+//   const { Student } = srv.entities; // use exposed entity
 
-  srv.on("READ", "Student", async (req) => {
-    const result = await cds.tx(req).run(SELECT.from(Student));
-    console.log(result);
-    return result;
-  });
-};
+//   srv.on("READ", "Student", async (req) => {
+//     const result = await cds.tx(req).run(SELECT.from(Student));
+//     console.log(result);
+//     return result;
+//   });
+// };
 
 // Another way of writing
 module.exports["CatalogService"] = cds.service.impl(async function () {
@@ -155,19 +155,25 @@ module.exports["CatalogService"] = cds.service.impl(async function () {
 module.exports["CatalogServiceLMS"] = cds.service.impl(async function () {
   const { GetContent, GetCourse, GetEnrollment, GetStudent } = this.entities;
 
-  this.on("READ", GetContent, async (req, res) => {
+  const run = (req) => cds.tx(req).run(req.query); // execute the OData query as-is
+
+  this.on("READ", GetContent, async (req) => {
     console.log("We are inside GetContent of LMS!");
+    return await run(req);
   });
 
-  this.on("READ", GetCourse, async (req, res) => {
+  this.on("READ", GetCourse, async (req) => {
     console.log("We are inside GetCourse of LMS!");
+    return await run(req);
   });
 
-  this.on("READ", GetEnrollment, async (req, res) => {
+  this.on("READ", GetEnrollment, async (req) => {
     console.log("We are inside GetEnrollment of LMS!");
+    return await run(req);
   });
 
-  this.on("READ", GetStudent, async (req, res) => {
+  this.on("READ", GetStudent, async (req) => {
     console.log("We are inside GetStudent of LMS!");
+    return await run(req);
   });
 });
