@@ -1,7 +1,7 @@
 namespace my.LMS;
 entity Content {
     key ID: Integer;
-    url: String(1024);
+    content_url: String(1024);
     date_published: Date;
     content_type: String(20);
     course: Association to Course; // N part  of a relationship of 1 to N
