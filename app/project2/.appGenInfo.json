@@ -1,0 +1,33 @@
+{
+  "generationParameters": {
+    "generationDate": "Thu Aug 28 2025 19:20:52 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "Local CAP",
+    "metadataFilename": "",
+    "serviceUrl": "http://localhost:4004/odata/v4/catalog-service-lms/",
+    "appName": "project2",
+    "appTitle": "Learning Management System",
+    "appDescription": "Learning Management System",
+    "appNamespace": "lms",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.139.0",
+    "enableCodeAssist": false,
+    "enableEslint": false,
+    "enableTypeScript": false,
+    "showMockDataInfo": false,
+    "generatorVersion": "1.18.5",
+    "template": "List Report Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "GetStudent"
+      },
+      {
+        "type": "Navigation Entity",
+        "value": "enrollment"
+      }
+    ],
+    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/project2/webapp/index.html"
+  }
+}
