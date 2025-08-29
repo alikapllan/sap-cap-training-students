@@ -66,6 +66,17 @@ annotate service.GetStudent with @(
 );
 
 annotate service.GetEnrollment with @(
+
+    // for course details we need to add facet here as what we see is first in Enrollment Page
+    UI.Facets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'EnrollmentFacet',
+            Label : 'Course Information',
+            // as course field is defined as lower case in Enrollment entity of structure.cds
+            Target : 'course/@UI.FieldGroup#CourseDetails', // also need navigation for it in manifest.json
+        },
+    ],
    
     UI.LineItem : [
         {
@@ -79,4 +90,47 @@ annotate service.GetEnrollment with @(
             Label : 'Course ID'
         }
     ],
+);
+
+// third level navigation
+annotate service.GetCourse with @(
+   
+    UI: {
+        HeaderInfo  : {
+            $Type : 'UI.HeaderInfoType',
+            TypeName : 'Course',
+            TypeNamePlural : 'Courses',
+            Title: { Value : ID },
+            Description : { 
+                Label : 'Course Name',
+                Value : course_name
+            }
+        },
+
+        FieldGroup #CourseDetails : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : course_name,
+                Label : 'Course Name'
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : course_duration,
+                Label : 'Course Duration'
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : course_price,
+                Label : 'Course Price'
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : course_url,
+                Label : 'Course Url'
+            },
+        ],
+    },
+    },
 );
