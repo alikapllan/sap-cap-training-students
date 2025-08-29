@@ -1,4 +1,4 @@
-ID,course_ID,student_email
-3001,1,demo@demo.com
-3002,2,demo@demo.com
-3003,2,ajay@demo.com
+ID,course_ID,student_ID
+3001,1,c9e78068-ddff-4f29-b71c-c4e0cf59c850
+3002,2,c9e78068-ddff-4f29-b71c-c4e0cf59c850
+3003,2,c9e78068-ddff-4f29-b71c-c4e0cf59c853

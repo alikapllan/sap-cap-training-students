@@ -25,7 +25,9 @@ entity Enrollment {
 }
 
 entity Student {
-    key email  : String(65) @(title: 'Email'); 
+    // odata draft enable create - mechanism -> make key auto generatebe -> UUID
+    key ID : UUID; 
+    email  : String(65) @(title: 'Email'); 
     first_name : String(20) @(title: 'First Name');
     last_name  : String(20);
     date_sign_up : Date;
