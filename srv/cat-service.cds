@@ -14,5 +14,10 @@ service CatalogServiceLMS @(impl: './mysimplesrv') {
     @readonly entity GetContent    as projection on LMS.Content;
     @readonly entity GetCourse     as projection on LMS.Course;
     @readonly entity GetEnrollment as projection on LMS.Enrollment;
-    @readonly entity GetStudent    as projection on LMS.Student;
+    entity GetStudent    as projection on LMS.Student;
 }
+
+// When we allow draft-enablement all things are taken care by framework. CRUD Op. on Student entity
+// The intermediate storage is gonna save for us temporarily and we commit via save button these changes are written permanently into DB.
+// While editing you can check the Draft table. There is gonna be a draft entry temporarily
+annotate CatalogServiceLMS.GetStudent with @odata.draft.enabled;
