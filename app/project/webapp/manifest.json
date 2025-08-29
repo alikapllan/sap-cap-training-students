@@ -82,7 +82,7 @@
         "preload": true,
         "settings": {
           "operationMode": "Server",
-          "autoExpandSelect": true,  
+          "autoExpandSelect": true,
           "earlyRequests": true
         }
       },
@@ -132,6 +132,13 @@
             "settings": {
               "contextPath": "/Student",
               "variantManagement": "Page",
+              "navigation": {
+                "Student": {
+                  "detail": {
+                    "route": "StudentObjectPage"
+                  }
+                }
+              },
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
@@ -149,7 +156,14 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Student"
+              "contextPath": "/Student",
+              "navigation": {
+                "Enrollment": {
+                  "detail": {
+                    "route": "EnrollmentRoute"
+                  }
+                }
+              }
             }
           }
         },
@@ -161,7 +175,14 @@
             "settings": {
               "editableHeaderContent": false,
               "entitySet": "GetEnrollment",
-              "contextPath": "/Enrollment"
+              "contextPath": "/Enrollment",
+              "navigation": {
+                "Course": {
+                  "detail": {
+                    "route": "CourseDetailRoute"
+                  }
+                }
+              }
             }
           }
         },
