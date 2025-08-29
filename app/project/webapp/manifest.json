@@ -113,6 +113,11 @@
           "target": "EnrollmentRoute"
         },
         {
+          "pattern": "Student({key})/Enrollment({key1}):?query:",
+          "name": "EnrollmentDetailRoute",
+          "target": "EnrollmentDetailRoute"
+        },
+        {
           "pattern": "Student({key})/Enrollment({key1})/Course:?query:",
           "name": "CourseDetailRoute",
           "target": "CourseDetailRoute"
@@ -178,6 +183,18 @@
                   }
                 }
               }
+            }
+          }
+        },
+        "EnrollmentDetailRoute": {
+          "type": "Component",
+          "id": "EnrollmentDetailRoute",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "entitySet": "GetEnrollment",
+              "contextPath": "/Enrollment"
             }
           }
         },
