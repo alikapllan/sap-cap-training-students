@@ -75,6 +75,7 @@ annotate service.GetEnrollment with @(
             Label : 'Course Information',
             // as course field is defined as lower case in Enrollment entity of structure.cds
             Target : 'course/@UI.FieldGroup#CourseDetails', // also need navigation for it in manifest.json
+            
         },
     ],
    
@@ -110,6 +111,11 @@ annotate service.GetCourse with @(
         FieldGroup #CourseDetails : {
         $Type : 'UI.FieldGroupType',
         Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : ID,
+                Label : 'Course ID'
+            },
             {
                 $Type : 'UI.DataField',
                 Value : course_name,
