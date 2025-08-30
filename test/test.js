@@ -46,4 +46,15 @@ describe("Testing CatalogServiceLMS", () => {
       last_name: "IWannaDie",
     });
   });
+
+  it("Navigation of Student to enrollment to course", async () => {
+    let app = require("express"); // already a part of CAPM
+    let srv = require("supertest")(app); // mock service
+
+    let { body } = srv.get(
+      "/catalog-service-lms/GetStudent(ID=c9e78068-ddff-4f29-b71c-c4e0cf59c850,%20IsActiveEntity=true)/enrollment(ID=c9e78068-ddff-4f29-b71c-c4e0cf59d851,IsActiveEntity=true)/course"
+    );
+
+    expect(body);
+  });
 });

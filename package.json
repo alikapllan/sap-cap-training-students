@@ -21,7 +21,8 @@
     "@sap/cds-dk": ">=8",
     "jest": "^30.1.1",
     "mbt": "^1.2.29",
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.5",
+    "supertest": "^7.1.4"
   },
   "scripts": {
     "start": "cds-serve",
