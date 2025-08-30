@@ -17,6 +17,8 @@ service CatalogServiceLMS @(impl: './mysimplesrv') {
     // in case of projection you have capability to override/customize the parser logic in service implementation
     entity GetEnrollment as select from LMS.Enrollment;
     entity GetStudent    as select from LMS.Student;
+    
+    @insertable entity Changelog as projection on LMS.Changelog;
 }
 
 // When we allow draft-enablement all things are taken care by framework. CRUD Op. on Student entity

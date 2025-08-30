@@ -153,7 +153,8 @@ module.exports["CatalogService"] = cds.service.impl(async function () {
 });
 
 module.exports["CatalogServiceLMS"] = cds.service.impl(async function () {
-  const { GetContent, GetCourse, GetEnrollment, GetStudent } = this.entities;
+  const { GetContent, GetCourse, GetEnrollment, GetStudent, Changelog } =
+    this.entities;
 
   const run = (req) => cds.tx(req).run(req.query); // execute the OData query as-is
 
@@ -206,5 +207,17 @@ module.exports["CatalogServiceLMS"] = cds.service.impl(async function () {
     */
     console.log("We are inside GetStudent of LMS!");
     return await run(req);
+  });
+
+  this.after("UPDATE", GetStudent, async (req) => {
+    console.log("*********** ON UPDATE AFTER GETStudent ***********");
+    const dateNow = new Date().toISOString().slice(0, 10);
+
+    await cds.tx(req).run(
+      INSERT.into(Changelog).entries({
+        date_changed: dateNow,
+        entity_name: "Student",
+      })
+    );
   });
 });

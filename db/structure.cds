@@ -34,3 +34,9 @@ entity Student {
     // a complete depedency of the enrollment to the student -> as we want to also enroll a student to a couse in student object page
     enrollment: Composition of many Enrollment on enrollment.student = $self; 
 }
+
+entity Changelog {
+    key ID : UUID;
+    date_changed: Date;
+    entity_name: String(30);
+}
