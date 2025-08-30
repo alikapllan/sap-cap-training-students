@@ -8,12 +8,12 @@ entity Content {
 }
 
 entity Course {
-    key ID: Integer;
-    course_name: String(100);
-    course_url: String(1024);
-    course_duration: Integer;
-    course_price: Decimal(5, 2);
-    published_status: Boolean;
+    key ID: Integer @(title: 'Course ID');
+    course_name: String(100) @(title: 'Course Name');
+    course_url: String(1024) @(title: 'Course URL');
+    course_duration: Integer @(title: 'Course Duration');
+    course_price: Decimal(5, 2) @(title: 'Course Price');
+    published_status: Boolean  @(title: 'Course Status');
     content: Association to many Content on content.course = $self; // 1 part of a relationship of 1 to N
     enrollment: Association to many Enrollment on enrollment.course = $self; 
 }
@@ -26,11 +26,11 @@ entity Enrollment {
 
 entity Student {
     // odata draft enable create - mechanism -> make key auto generatebe -> UUID
-    key ID : UUID; 
+    key ID : UUID @(title: 'Student ID'); 
     email  : String(65) @(title: 'Email'); 
     first_name : String(20) @(title: 'First Name');
-    last_name  : String(20);
-    date_sign_up : Date;
+    last_name  : String(20) @(title: 'Last Name');
+    date_sign_up : Date @(title: 'Date of Sign Up');
     // a complete depedency of the enrollment to the student -> as we want to also enroll a student to a couse in student object page
     enrollment: Composition of many Enrollment on enrollment.student = $self; 
 }
