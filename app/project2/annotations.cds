@@ -66,6 +66,13 @@ annotate service.GetStudent with @(
 );
 
 annotate service.GetEnrollment with @(
+    
+    UI.Identification  : [
+        { 
+            Value: course_ID, 
+            Label: 'Course ID' 
+        }
+    ],
 
     // for course details we need to add facet here as what we see is first in Enrollment Page
     UI.Facets : [
@@ -77,6 +84,13 @@ annotate service.GetEnrollment with @(
             Target : 'course/@UI.FieldGroup#CourseDetails', // also need navigation for it in manifest.json
             
         },
+        // to get the search help on enrollment creation page & also when wanting to update in navigation
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'CourseEnrollmentFacet',
+            Label : 'Course Enrollment',
+            Target : '@UI.Identification', 
+        }
     ],
    
     UI.LineItem : [
@@ -93,10 +107,34 @@ annotate service.GetEnrollment with @(
     ],
 );
 
+// For value help on course inside Enrollment within Student OP
+annotate service.GetEnrollment with { 
+    course @(
+        ValueList.entity: GetCourse // basically taking it from Identification as seen below
+        // -- or can be written also as below
+        // Common.ValueList : {
+        //     entity: GetCourse
+        // }
+    );
+};
+
 // third level navigation
 annotate service.GetCourse with @(
    
     UI: {
+        // for search help needed -> 
+        Identification  : [
+            // somehow writing the ID first in identification leads to some strange UI behavior :P
+            { 
+                Value: course_name, 
+                Label: 'Course Name' 
+            },
+            { 
+                Value: ID, 
+                Label: 'Course ID' 
+            }
+        ],
+
         HeaderInfo  : {
             $Type : 'UI.HeaderInfoType',
             TypeName : 'Course',
