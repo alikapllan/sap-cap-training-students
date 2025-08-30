@@ -1,7 +1,7 @@
 # Getting Started
 
 ### App test
-https://github.com/user-attachments/assets/63b63180-9c2e-4604-9633-9fcf47ffc8ad
+https://github.com/user-attachments/assets/a2357723-455d-4af1-b3aa-85f801b1853a
 
 Welcome to your new project.
 
