@@ -13,8 +13,10 @@ service CatalogService @(impl: './mysimplesrv') {
 service CatalogServiceLMS @(impl: './mysimplesrv') {
     @readonly entity GetContent    as projection on LMS.Content;
     @readonly entity GetCourse     as projection on LMS.Course;
-    @readonly entity GetEnrollment as projection on LMS.Enrollment;
-    entity GetStudent    as projection on LMS.Student;
+    // using select from lets you get more feature out of the lib. CAPM
+    // in case of projection you have capability to override/customize the parser logic in service implementation
+    entity GetEnrollment as select from LMS.Enrollment;
+    entity GetStudent    as select from LMS.Student;
 }
 
 // When we allow draft-enablement all things are taken care by framework. CRUD Op. on Student entity

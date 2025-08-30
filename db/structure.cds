@@ -19,7 +19,7 @@ entity Course {
 }
 
 entity Enrollment {
-    key ID: Integer;
+    key ID: UUID; // due to COMPOSITION below enrollment has now full dependency to student in creating and for fully auto generation -> UUID
     course: Association to Course;
     student: Association to Student;
 }
@@ -31,5 +31,6 @@ entity Student {
     first_name : String(20) @(title: 'First Name');
     last_name  : String(20);
     date_sign_up : Date;
-    enrollment: Association to many Enrollment on enrollment.student = $self; 
+    // a complete depedency of the enrollment to the student -> as we want to also enroll a student to a couse in student object page
+    enrollment: Composition of many Enrollment on enrollment.student = $self; 
 }
