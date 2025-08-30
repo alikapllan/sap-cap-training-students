@@ -172,6 +172,15 @@ module.exports["CatalogServiceLMS"] = cds.service.impl(async function () {
     return await run(req);
   });
 
+  // to get hit in debug mode of draft you need to write -> entity.draft
+  this.before("DELETE", GetStudent.drafts, (req) => {
+    console.log("We are in GetStudent draft Delete of LMS!");
+  });
+
+  this.before("DELETE", GetEnrollment.drafts, (req) => {
+    console.log("We are in GetStudent draft Enrollment of LMS!");
+  });
+
   this.on("READ", GetStudent, async (req) => {
     /* manual testing of Navigation functionality of services to understand how it works
 
