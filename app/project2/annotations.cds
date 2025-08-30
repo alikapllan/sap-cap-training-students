@@ -110,7 +110,11 @@ annotate service.GetEnrollment with @(
 // For value help on course inside Enrollment within Student OP
 annotate service.GetEnrollment with { 
     course @(
-        ValueList.entity: GetCourse // basically taking it from Identification as seen below
+        Common: {
+            Text : course.course_name,
+            ValueList: { entity: GetCourse }
+        },
+        // ValueList.entity: GetCourse // basically taking it from Identification as seen below
         // -- or can be written also as below
         // Common.ValueList : {
         //     entity: GetCourse
