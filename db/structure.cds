@@ -1,5 +1,11 @@
 namespace my.LMS;
-entity Content {
+
+using {
+    cuid,
+    managed
+} from '@sap/cds/common';
+
+entity Content{
     key ID: Integer;
     content_url: String(1024);
     date_published: Date;
@@ -18,15 +24,15 @@ entity Course {
     enrollment: Association to many Enrollment on enrollment.course = $self; 
 }
 
-entity Enrollment {
-    key ID: UUID; // due to COMPOSITION below enrollment has now full dependency to student in creating and for fully auto generation -> UUID
+entity Enrollment: cuid, managed  {
+    // key ID: UUID; // due to COMPOSITION below enrollment has now full dependency to student in creating and for fully auto generation -> UUID
     course: Association to Course;
     student: Association to Student;
 }
 
-entity Student {
+entity Student: cuid, managed  {
     // odata draft enable create - mechanism -> make key auto generatebe -> UUID
-    key ID : UUID @(title: 'Student ID'); 
+    // key ID : UUID @(title: 'Student ID'); 
     email  : String(65) @(title: 'Email'); 
     first_name : String(20) @(title: 'First Name');
     last_name  : String(20) @(title: 'Last Name');
