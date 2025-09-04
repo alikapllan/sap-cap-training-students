@@ -2,14 +2,25 @@ namespace my.LMS;
 
 using {
     cuid,
-    managed
+    managed,
+    sap.common.CodeList as CodeList
 } from '@sap/cds/common';
+
+// --- Reusable, localized code list for content types ---
+entity ContentType : CodeList {
+  key code  : String(20);          // e.g. 'VIDEO', 'ARTICLE', 'QUIZ'
+  name      : localized String(80);
+  descr     : localized String(400);
+}
 
 entity Content{
     key ID: Integer;
     content_url: String(1024);
     date_published: Date;
-    content_type: String(20);
+    // content_type: String(20);
+
+    // new, canonical code-list reference (preferred)
+    contentType : Association to ContentType;
     course: Association to Course; // N part  of a relationship of 1 to N
 }
 
