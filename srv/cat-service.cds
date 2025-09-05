@@ -19,6 +19,8 @@ service CatalogServiceLMS @(impl: './mysimplesrv') {
     entity GetStudent    as select from LMS.Student;
     
     @insertable entity Changelog as projection on LMS.Changelog;
+
+    action newEnrollmentStudent(student_ID: LMS.Student:ID, course_ID: LMS.Course:ID);
 }
 
 // When we allow draft-enablement all things are taken care by framework. CRUD Op. on Student entity

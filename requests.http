@@ -141,3 +141,12 @@ Accept: application/json
 {
   "first_name": "Update Name 2"
 }
+
+### Test Action - newEnrollmentStudent
+POST {{base}}/newEnrollmentStudent
+Content-Type: application/json
+
+{ 
+  "student_ID": "c9e78068-ddff-4f29-b71c-c4e0cf59c850", 
+  "course_ID": 4
+}

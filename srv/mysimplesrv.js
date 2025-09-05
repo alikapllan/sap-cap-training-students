@@ -1,3 +1,4 @@
+const { ApplicationService } = require("@sap/cds");
 const cds = require("@sap/cds");
 
 // module.exports = (srv) => {
@@ -220,4 +221,59 @@ module.exports["CatalogServiceLMS"] = cds.service.impl(async function () {
     //   })
     // );
   });
+
+  // === ACTION: newEnrollmentStudent(student_ID, course_ID) ===
+  this.on('newEnrollmentStudent', async (req) => {
+    const { GetStudent, GetEnrollment, GetCourse } = this.entities;
+
+    const { student_ID, course_ID } = req.data;
+
+    // Basic validation
+    if (!student_ID || !course_ID) {
+      return req.error(400, 'student_ID and course_ID are required');
+    }
+
+    const tx = cds.tx(req);
+    const [studentExists] = await tx.run(
+      SELECT.from(GetStudent).where({ ID: student_ID })
+    );
+    const [courseExists] = await tx.run(
+      SELECT.from(GetCourse).where({ ID: course_ID })
+    );
+    if (!studentExists) return req.error(404, `Student ${student_ID} not found`);
+    if (!courseExists) return req.error(404, `Course ${course_ID} not found`);
+
+    // Create enrollment (Enrollment has associations to Course & Student)
+    const created = await tx.run(
+      INSERT.into(GetEnrollment).entries({
+        student_ID: student_ID,
+        course_ID: course_ID
+        // cuid + managed fields handled automatically by CAP
+      })
+    );
+
+    // Return something useful (created row or a message)
+    if (created.results.length > 0) {
+      console.log("New Enrollment operation done successfuly")
+    }
+  });
 });
+
+// better way to register the service :D do like this next time
+/*
+class CatalogServiceLMS extends ApplicationService {
+  init() {
+    // register action
+    this.on("newEnrollmentStudent", this.newEnrollmentToStudent);
+
+    return super.init();
+  };
+
+  newEnrollmentToStudent(req) {
+    const { Student } = this.entities;
+    const { student_ID, course_ID } = req.data;
+
+
+  }
+}
+  */
