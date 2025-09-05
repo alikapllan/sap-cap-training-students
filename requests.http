@@ -70,3 +70,74 @@ Content-Type: application/json
   "last_name": "Student",
   "date_sign_up": "2025-08-26"
 }
+
+
+# ==============================================================
+#    Optimistic locking:
+#    - Create once on the entity set
+#    - Read twice (capture ETag1, ETag2)
+#    - Update with ETag1 (OK)
+#    - Update with ETag2 (FAIL 412)
+
+# how basically works in a scenario
+# 1 ETags change on WRITE, not on READ.
+# 2 If A and B both read the same record at time T0, they both get the same ETag (say E3).
+# 3 writes first with If-Match: E3 → success, server updates the row and bumps ETag to E4.
+# 4 then tries to write with If-Match: E3 (now stale) → server returns 412 Precondition Failed.
+# 5 If B re-reads (gets E4) and retries with If-Match: E4, it will succeed.
+# ================================================================ 
+
+@base = http://localhost:4004/odata/v4/catalog-service-lms
+@set  = GetStudent
+
+### 1) Create Student (returns ID of the draft row)
+# @name createStudent
+POST {{base}}/{{set}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "optimistic.lock@test.local",
+  "first_name": "Initial",
+  "last_name": "Version",
+  "date_sign_up": "2025-09-05"
+}
+###
+@studentID = {{createStudent.response.body.$.ID}}
+
+### 2) Read Student -> capture ETag1
+# @name read1
+GET {{base}}/{{set}}(ID={{studentID}},IsActiveEntity=false)
+Accept: application/json
+###
+@ETag1 = {{read1.response.headers.ETag}}
+
+### 3) Read Student again -> capture ETag2 (this will become stale)
+# @name read2
+GET {{base}}/{{set}}(ID={{studentID}},IsActiveEntity=false)
+Accept: application/json
+###
+@ETag2 = {{read2.response.headers.ETag}}
+
+### 4) Update with ETag1 -> should SUCCEED (new ETag generated)
+# @name update_ok
+PUT {{base}}/{{set}}(ID={{studentID}},IsActiveEntity=false)
+If-Match: {{ETag1}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "first_name": "Updated Name"
+}
+###
+
+### 5) Update again with *stale* ETag2 -> should FAIL (412)
+# @name update_fail_412
+PUT {{base}}/{{set}}(ID={{studentID}},IsActiveEntity=false)
+If-Match: {{ETag2}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "first_name": "Update Name 2"
+}

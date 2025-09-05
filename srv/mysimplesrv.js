@@ -213,11 +213,11 @@ module.exports["CatalogServiceLMS"] = cds.service.impl(async function () {
     console.log("*********** ON UPDATE AFTER GETStudent ***********");
     const dateNow = new Date().toISOString().slice(0, 10);
 
-    await cds.tx(req).run(
-      INSERT.into(Changelog).entries({
-        date_changed: dateNow,
-        entity_name: "Student",
-      })
-    );
+    // await cds.tx(req).run(
+    //   INSERT.into(Changelog).entries({
+    //     date_changed: dateNow,
+    //     entity_name: "Student",
+    //   })
+    // );
   });
 });

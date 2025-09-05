@@ -57,3 +57,7 @@ entity Changelog {
     date_changed: Date;
     entity_name: String(30);
 }
+
+// --- Optimistic Locking via Etag ---
+annotate Enrollment with { modifiedAt @odata.etag };
+annotate Student    with { modifiedAt @odata.etag };
